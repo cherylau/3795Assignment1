@@ -1,19 +1,18 @@
-<!-- file to establishing database connection using PDO! -->
-
-<!-- this implements the singleton pattern to connect to the database -->
 <?php
 
 class Database {
-    private static $dbPath = __DIR__ . '/db.sqlite';
+    private static $dbPath = '/school.db'; // Define the path relative to the document root
     private static $dbInstance = null;
+
     private function __construct() {}
     private function __clone() {}
+
     public static function getConnection() {
         if (self::$dbInstance === null) {
+            $fullPath = $_SERVER['DOCUMENT_ROOT'] . self::$dbPath;
             try {
-                self::$dbInstance = new PDO('sqlite:' . self::$dbPath);
-                self::$dbInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
+                self::$dbInstance = new SQLite3($fullPath);
+            } catch (Exception $e) {
                 exit("Error connecting to the database: " . $e->getMessage());
             }
         }

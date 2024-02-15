@@ -1,4 +1,3 @@
-<!-- this uses the Database class to establish the database connection -->
 <?php
 
 require 'Database.php'; 
@@ -6,13 +5,16 @@ require 'init_db.php';
 
 $db = Database::getConnection();
 
-// this function adds a new bucket to the buckets table
+// this function adds a new bucket to the buckets tablefunction addBucket($db, $category, $description) {
 function addBucket($db, $category, $description) {
-    $sql = "INSERT INTO buckets (category, description) VALUES (:category, :description)";
+    
+    $sql = 'INSERT INTO buckets (category, description) VALUES (?, ?)';
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(':category', $category, PDO::PARAM_STR);
-    $stmt->bindValue(':description', $description, PDO::PARAM_STR);
-    return $stmt->execute();
+
+    $stmt->bindValue(1, $category, SQLITE3_TEXT);
+    $stmt->bindValue(2, $description, SQLITE3_TEXT);
+    $result = $stmt->execute();
+    return $result !== false;
 }
 
 if (addBucket($db, 'Utilities', 'Monthly utility bills')) {
@@ -20,4 +22,6 @@ if (addBucket($db, 'Utilities', 'Monthly utility bills')) {
 } else {
     echo "Failed to add new bucket.";
 }
+
+
 ?>
