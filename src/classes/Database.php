@@ -1,0 +1,98 @@
+<?php
+
+class Database {
+    private static $dbPath = '/db.sqlite';
+    private static $dbInstance = null;
+    private function __construct() {}
+    private function __clone() {}
+    public static function getConnection() {
+        if (self::$dbInstance === null) {
+            $fullPath = $_SERVER['DOCUMENT_ROOT'] . self::$dbPath;
+            try {
+                self::$dbInstance = new SQLite3($fullPath);
+                self::initializeTables();
+            } catch (Exception $e) {
+                exit("Error connecting to the database: " . $e->getMessage());
+            }
+        }
+        return self::$dbInstance;
+    }
+
+    public static function initializeTables() {
+        $queries = [
+            "CREATE TABLE IF NOT EXISTS buckets (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                category TEXT NOT NULL,
+                description TEXT NOT NULL
+            )",
+            "CREATE TABLE IF NOT EXISTS transactions (
+                transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                date TEXT,
+                amount REAL,
+                description TEXT,
+                bucket_id INTEGER,
+                FOREIGN KEY (bucket_id) REFERENCES buckets(id)
+            )"
+        ];
+
+        foreach ($queries as $query) {
+            self::$dbInstance->exec($query);
+        }
+    }
+
+    public static function insertMockDataIntoBuckets() {
+        $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM buckets");
+        if ($exists == 0) {
+            $sql = "INSERT INTO buckets (category, description) VALUES
+                ('Utilities', 'Monthly utility bills'),
+                ('Groceries', 'Food and household items'),
+                ('Car', 'Car payment and maintenance'),
+                ('Entertainment', 'Movies, games, and other fun stuff'),
+                ('Miscellaneous', 'Other expenses')";
+            self::$dbInstance->exec($sql);
+        }
+    }
+
+    public static function insertMockDataIntoTransactions() {
+        $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM transactions");
+        if ($exists == 0) {
+            $sql = "INSERT INTO transactions (date, amount, description, bucket_id) VALUES
+                ('2020-01-01', 100.00, 'Electric bill', 1),
+                ('2020-01-02', 200.00, 'Water bill', 1),
+                ('2020-01-03', 300.00, 'Gas bill', 1),
+                ('2020-01-04', 400.00, 'Groceries', 2),
+                ('2020-01-05', 500.00, 'Car payment', 3),
+                ('2020-01-06', 600.00, 'Car maintenance', 3),
+                ('2020-01-07', 700.00, 'Movie night', 4),
+                ('2020-01-08', 800.00, 'Game night', 4),
+                ('2020-01-09', 900.00, 'Other', 5)";
+            self::$dbInstance->exec($sql);
+        }
+    }
+    
+}
+
+// class Transaction {
+//     public static function fetchAll() {
+//         $db = Database::getConnection();
+//         $result = $db->query('SELECT * FROM transactions');
+//         $transactions = [];
+//         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+//             $transactions[] = $row;
+//         }
+//         return $transactions;
+//     }
+// }
+
+// class Bucket {
+//     public static function fetchAll() {
+//         $db = Database::getConnection();
+//         $result = $db->query('SELECT * FROM buckets');
+//         $buckets = [];
+//         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+//             $buckets[] = $row;
+//         }
+//         return $buckets;
+//     }
+// }
+
