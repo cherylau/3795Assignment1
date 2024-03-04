@@ -1,6 +1,7 @@
 <?php
-require_once '../../src/classes/User.php';
-require_once '../../src/classes/Database.php';
+spl_autoload_register(function ($class_name) {
+    include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+});
 require_once '../../utils.php';
 
 

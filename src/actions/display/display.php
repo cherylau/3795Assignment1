@@ -1,10 +1,8 @@
 <?php
-include_once("../../inc_header.php");
-require_once("../../src/classes/Database.php");
-require_once("../../src/classes/Bucket.php");
-require_once("../../src/classes/Transaction.php");
-require_once("../../src/classes/Admin.php");
-require_once '../../src/classes/User.php';
+include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
+spl_autoload_register(function ($class_name) {
+    include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+});
 
 try {
     Database::getConnection();

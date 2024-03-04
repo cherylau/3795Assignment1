@@ -1,7 +1,8 @@
 <?php
 include("../../inc_header.php");
-require_once("../../src/classes/Bucket.php");
-require_once("../../src/classes/Database.php");
+spl_autoload_register(function ($class_name) {
+    include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+});
 require_once("../../utils.php");
 
 Database::getConnection();
