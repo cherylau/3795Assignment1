@@ -14,7 +14,7 @@ if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_role'] = $user['role'];
         if ($user['role'] === 'admin') {
-            header("Location: ../../actions/admin/admin_.php");
+            header("Location: ../../actions/admin/admin_process.php");
         } else {
             header("Location: ../../actions/display/display.php");
         }
