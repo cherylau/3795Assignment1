@@ -17,7 +17,7 @@
   </form>
 
   <button onclick="window.location.href='actions/display/display.php'">Display</button>
-  
+  <button onclick="window.location.href='actions/register/register.php'">Register</button>
   
 
 

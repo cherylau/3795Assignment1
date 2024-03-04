@@ -32,6 +32,13 @@ class Database {
                 description TEXT,
                 bucket_id INTEGER,
                 FOREIGN KEY (bucket_id) REFERENCES buckets(id)
+            )",
+            "CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                role TEXT NOT NULL DEFAULT 'user',
+                is_approved BOOLEAN NOT NULL DEFAULT 0
             )"
         ];
 
