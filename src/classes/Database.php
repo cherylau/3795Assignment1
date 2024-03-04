@@ -1,8 +1,11 @@
 <?php
 
+require_once 'Admin.php';
+
 class Database {
     private static $dbPath = '/db.sqlite';
     private static $dbInstance = null;
+
     private function __construct() {}
     private function __clone() {}
     public static function getConnection() {
@@ -17,7 +20,6 @@ class Database {
         }
         return self::$dbInstance;
     }
-
     public static function initializeTables() {
         $queries = [
             "CREATE TABLE IF NOT EXISTS buckets (
@@ -41,7 +43,6 @@ class Database {
                 is_approved BOOLEAN NOT NULL DEFAULT 0
             )"
         ];
-
         foreach ($queries as $query) {
             self::$dbInstance->exec($query);
         }
@@ -77,29 +78,5 @@ class Database {
         }
     }
     
+
 }
-
-// class Transaction {
-//     public static function fetchAll() {
-//         $db = Database::getConnection();
-//         $result = $db->query('SELECT * FROM transactions');
-//         $transactions = [];
-//         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-//             $transactions[] = $row;
-//         }
-//         return $transactions;
-//     }
-// }
-
-// class Bucket {
-//     public static function fetchAll() {
-//         $db = Database::getConnection();
-//         $result = $db->query('SELECT * FROM buckets');
-//         $buckets = [];
-//         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-//             $buckets[] = $row;
-//         }
-//         return $buckets;
-//     }
-// }
-

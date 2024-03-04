@@ -3,12 +3,15 @@ include_once("../../inc_header.php");
 require_once("../../src/classes/Database.php");
 require_once("../../src/classes/Bucket.php");
 require_once("../../src/classes/Transaction.php");
+require_once("../../src/classes/Admin.php");
+require_once '../../src/classes/User.php';
 
 try {
     Database::getConnection();
     Database::initializeTables();
     Database::insertMockDataIntoBuckets();
     Database::insertMockDataIntoTransactions();
+    Admin::initalizeAdminUsers();
 } catch (Exception $e) {
     echo "<p>Error setting up the database: " . $e->getMessage() . "</p>";
 }
@@ -84,6 +87,4 @@ if (!empty($transactions)) {
     echo "<p>No transaction records found.</p>";
 }
 
-
 include_once("../../inc_footer.php");
-?>
