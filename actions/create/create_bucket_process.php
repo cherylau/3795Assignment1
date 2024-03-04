@@ -2,6 +2,7 @@
 include("../../inc_header.php");
 require_once("../../src/classes/Bucket.php");
 require_once("../../src/classes/Database.php");
+require_once("../../utils.php");
 Database::getConnection();
 
 if (isset($_POST['submit'])) {
