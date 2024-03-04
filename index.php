@@ -16,6 +16,10 @@
     <input type="submit" value="Upload File" name="submit">
   </form>
 
+  <button onclick="window.location.href='actions/display/display.php'">Display</button>
+  
+  
+
 
 
   <?php
