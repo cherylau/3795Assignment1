@@ -14,26 +14,41 @@ class Transaction
   public static function importFromCSV($filePath)
   {
     $db = Database::getConnection();
+    $insertedTransactions = [];
+
     if (($handle = fopen($filePath, "r")) !== FALSE) {
       fgetcsv($handle);
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
         $date = $data[0];
-        $location = $data[1];
+        $description = $data[1];
         $credit = $data[2];
         $debit = $data[3];
-        $total = $data[4];
+        $bucketId = null;
 
-        $stmt = $db->prepare("INSERT INTO transactions (date, location, credit, debit, total) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id) VALUES (?, ?, ?, ?, ?)');
         $stmt->bindValue(1, $date, SQLITE3_TEXT);
-        $stmt->bindValue(2, $location, SQLITE3_TEXT);
-        $stmt->bindValue(3, $credit, SQLITE3_FLOAT);
-        $stmt->bindValue(4, $debit, SQLITE3_FLOAT);
-        $stmt->bindValue(5, $total, SQLITE3_FLOAT);
+        $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
+        $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
+        $stmt->bindValue(4, $description, SQLITE3_TEXT);
+        $stmt->bindValue(5, $bucketId, SQLITE3_INTEGER);
         $stmt->execute();
+
+
+        $insertedTransactions[] = [
+          'date' => $date,
+          'description' => $description,
+          'credit' => $credit,
+          'debit' => $debit,
+          'bucketId' => $bucketId
+        ];
       }
       fclose($handle);
     }
+
+
+    return $insertedTransactions;
   }
+
 
 
   public static function update($transactionId, $date, $credit, $debit, $description, $bucketId)
