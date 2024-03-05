@@ -1,19 +1,16 @@
-<?php
-include($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
-include($_SERVER['DOCUMENT_ROOT'] . "/inc_db.php");
-?>
+<?php include($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php"); ?>
 
-<form action="import/index.php" method="post" enctype="multipart/form-data">
-  Select CSV File to Upload:
-  <input type="file" name="fileToUpload" id="fileToUpload">
-  <input type="submit" value="Upload File" name="submit">
-</form>
+<div class="container vh-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-6 text-center">
+            <h1>Welcome!</h1>
+            <p class="lead">Get started by logging in or registering a new account.</p>
+            <div class="mt-4">
+                <a href="actions/login/login.php" class="btn btn-primary me-2">Login</a>
+                <a href="actions/register/register.php" class="btn btn-secondary">Register</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<button onclick="window.location.href='actions/display/display.php'">Display</button>
-<button onclick="window.location.href='actions/register/register.php'">Register</button>
-<button onclick="window.location.href='actions/login/login.php'">Login</button>
-
-<?php
-include($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php");
-
-?>
+<?php include($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php"); ?>
