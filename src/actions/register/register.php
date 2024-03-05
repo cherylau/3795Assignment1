@@ -21,6 +21,6 @@ include "../../inc_header.php";
     <button type="submit" class="btn btn-primary" name="submit">Register</button>
 </form>
 
-<?php
-include('../../inc_footer.php');
-?>
+</div>
+</body>
+</html>

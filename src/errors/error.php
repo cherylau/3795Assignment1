@@ -1,4 +1,6 @@
-<?php include_once '../../inc_header.php'; ?>
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
+?>
 
 <div class="vh-100 d-flex justify-content-center align-items-center">
     <div class="text-center">
@@ -35,4 +37,5 @@
     </div>
 </div>
 
-<?php include_once '../../inc_footer.php'; ?>
+        </div>
+        

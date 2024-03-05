@@ -26,7 +26,8 @@ if (isset($_POST["submit"])) {
     }
 
     if (empty($errorMessages)) {
-        $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . $fileName;
+      //change file extension to .imported
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . $fileName . '.imported';
         if (move_uploaded_file($file, $destination)) {
             $insertedTransactions = Transaction::importFromCSV($destination);
             header('Location: /actions/display/display.php');

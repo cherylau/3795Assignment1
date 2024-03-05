@@ -13,5 +13,10 @@
         </div>
     </div>
 </div>
+</br>
+</br>
 
-<?php include($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php"); ?>
+</div>
+</body>
+</html>
+

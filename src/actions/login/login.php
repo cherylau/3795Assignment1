@@ -14,5 +14,9 @@
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
+</br>
+</br>
 
-<?php include("../../inc_footer.php"); ?>
+</div>
+</body>
+</html>

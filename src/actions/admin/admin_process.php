@@ -10,7 +10,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header('Location: /src/errors/error.php?type=admin_only');
+    header('Location: /errors/error.php?type=admin_only');
     exit;
 }
 $message = ''; 
