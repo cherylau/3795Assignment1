@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_role'])) {
 
 <ul>
     <li><a href="/actions/upload/upload_csv.php">Upload CSV File</a></li>
-    <li><a href="/actions/display/display_transactions.php">View Transactions</a></li>
+    <li><a href="/actions/display/display.php">View Transactions</a></li>
 </ul>
 
 <?php include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php"); ?>
