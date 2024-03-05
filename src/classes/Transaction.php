@@ -88,8 +88,8 @@ class Transaction
     $stmt->bindValue(1, $date, SQLITE3_TEXT);
     $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
     $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
-    $stmt->bindValue(3, $description, SQLITE3_TEXT);
-    $stmt->bindValue(4, $bucketId, SQLITE3_INTEGER);
+    $stmt->bindValue(4, $description, SQLITE3_TEXT);
+    $stmt->bindValue(5, $bucketId, SQLITE3_INTEGER);
     return $stmt->execute() ? true : false;
   }
 }
