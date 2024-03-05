@@ -19,17 +19,13 @@ public static function getBucketIdForKeyword($description)
     $result = $stmt->execute();
 
     $description = strtoupper($description);
-    echo "\nDescription: " . $description . "\n";
 
     while ($row = $result->fetchArray()) {
-        echo "Comparing with keyword: " . $row['keyword'] . "\n";
         if (strpos($description, strtoupper($row['keyword'])) !== false) {
-            echo "Match found. Keyword: " . $row['keyword'] . ", bucketId: " . $row['bucketId'] . "\n";
             return $row['bucketId'];
         }
     }
 
-    echo "No match found. Returning default bucketId: 5\n";
     return 5;
 }
   
