@@ -5,7 +5,7 @@
     <div class="container">
         <div class="d-flex justify-content-end">
             <button onclick="goBack()" class="btn btn-outline-info me-3">Back</button>
-            <a href="/logout.php" class="btn btn-dark
+            <a href="../actions/login/logout.php" class="btn btn-dark
             ">Logout</a>
         </div>
     </div>
