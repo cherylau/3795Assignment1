@@ -14,10 +14,15 @@ if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_role'] = $user['role'];
-        if ($user['role'] === 'admin') {
-            header("Location: ../../actions/admin/admin_process.php");
-        } else {
-            header("Location: ../../actions/display/display.php");
+        
+        if (isset($_SESSION['user_role'])) {
+            if ($_SESSION['user_role'] === 'admin') {
+                header("Location: ../../dashboard/admin_dashboard.php");
+                exit();
+            } elseif ($_SESSION['user_role'] === 'user') {
+                header("Location: ../../dashboard/user_dashboard.php");
+                exit();
+            }
         }
     } else {
         $_SESSION['error'] = "Your account is pending approval.";

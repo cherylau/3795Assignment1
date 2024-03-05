@@ -1,7 +1,8 @@
 <?php
-require_once '../../src/classes/User.php';
-require_once '../../src/classes/Database.php';
-require_once '../../src/classes/Admin.php';
+
+spl_autoload_register(function ($class_name) {
+    include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+  });
 require_once '../../inc_header.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -42,7 +43,7 @@ $pendingUsers = User::fetchAllPendingApproval();
         <tr>
             <td><?= htmlspecialchars($user['email']); ?></td>
             <td>
-                <form action="admin.php" method="post">
+                <form action="admin_process.php" method="post">
                     <input type="hidden" name="approve_user_id" value="<?= $user['id']; ?>">
                     <button type="submit" class="btn btn-success">Approve</button>
                 </form>
@@ -52,5 +53,5 @@ $pendingUsers = User::fetchAllPendingApproval();
     </tbody>
 </table>
 <?php else: ?>
-    <div class="alert alert-info">There are no pending users for approval.</div>
+    <div class="alert alert-info">There are no more pending users for approval.</div>
 <?php endif; ?>
