@@ -56,17 +56,23 @@ class Database
     }
   }
 
-  public static function insertMockDataIntoBuckets()
+  public static function insertCSVDataIntoBuckets()
   {
     $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM buckets");
     if ($exists == 0) {
-      $sql = "INSERT INTO buckets (category, description) VALUES
-                ('Utilities', 'Monthly utility bills'),
-                ('Groceries', 'Food and household items'),
-                ('Car', 'Car payment and maintenance'),
-                ('Entertainment', 'Movies, games, and other fun stuff'),
-                ('Miscellaneous', 'Other expenses')";
-      self::$dbInstance->exec($sql);
+      if (($handle = fopen("../../import/Buckets.csv", "r")) !== FALSE) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+          if (count($data) == 3) {
+            $sql = "INSERT INTO buckets (id, category, description) VALUES (?, ?, ?)";
+            $stmt = self::$dbInstance->prepare($sql);
+            $stmt->bindValue(1, $data[0]);
+            $stmt->bindValue(2, $data[1]);
+            $stmt->bindValue(3, $data[2]);
+            $stmt->execute();
+          }
+        }
+        fclose($handle);
+      }
     }
   }
 

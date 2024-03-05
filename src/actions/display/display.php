@@ -7,7 +7,7 @@ spl_autoload_register(function ($class_name) {
 try {
   Database::getConnection();
   Database::initializeTables();
-  Database::insertMockDataIntoBuckets();
+  Database::insertCSVDataIntoBuckets();
   Database::insertMockDataIntoTransactions();
   Admin::initalizeAdminUsers();
 } catch (Exception $e) {

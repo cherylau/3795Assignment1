@@ -11,10 +11,7 @@ if (isset($_POST["submit"])) {
   if (move_uploaded_file($file, $destination)) {
     echo "The file has been uploaded.";
 
-    // Call the importFromCSV function
     $insertedTransactions = Transaction::importFromCSV($destination);
-
-    // Display the inserted transactions
     echo '<table border="1">';
     foreach ($insertedTransactions as $transaction) {
       echo '<tr>';
