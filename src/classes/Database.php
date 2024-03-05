@@ -2,69 +2,79 @@
 
 require_once 'Admin.php';
 
-class Database {
-    private static $dbPath = '/db.sqlite';
-    private static $dbInstance = null;
+class Database
+{
+  private static $dbPath = '/db.sqlite';
+  private static $dbInstance = null;
 
-    private function __construct() {}
-    private function __clone() {}
-    public static function getConnection() {
-        if (self::$dbInstance === null) {
-            $fullPath = $_SERVER['DOCUMENT_ROOT'] . self::$dbPath;
-            try {
-                self::$dbInstance = new SQLite3($fullPath);
-                self::initializeTables();
-            } catch (Exception $e) {
-                exit("Error connecting to the database: " . $e->getMessage());
-            }
-        }
-        return self::$dbInstance;
+  private function __construct()
+  {
+  }
+  private function __clone()
+  {
+  }
+  public static function getConnection()
+  {
+    if (self::$dbInstance === null) {
+      $fullPath = $_SERVER['DOCUMENT_ROOT'] . self::$dbPath;
+      try {
+        self::$dbInstance = new SQLite3($fullPath);
+        self::initializeTables();
+      } catch (Exception $e) {
+        exit("Error connecting to the database: " . $e->getMessage());
+      }
     }
-    public static function initializeTables() {
-        $queries = [
-            "CREATE TABLE IF NOT EXISTS buckets (
+    return self::$dbInstance;
+  }
+  public static function initializeTables()
+  {
+    $queries = [
+      "CREATE TABLE IF NOT EXISTS buckets (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 category TEXT NOT NULL,
                 description TEXT NOT NULL
             )",
-            "CREATE TABLE IF NOT EXISTS transactions (
+      "CREATE TABLE IF NOT EXISTS transactions (
                 transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 date TEXT,
-                amount REAL,
+                credit REAL,
+                debit REAL,
                 description TEXT,
                 bucket_id INTEGER,
                 FOREIGN KEY (bucket_id) REFERENCES buckets(id)
             )",
-            "CREATE TABLE IF NOT EXISTS users (
+      "CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 email VARCHAR(255) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 role TEXT NOT NULL DEFAULT 'user',
                 is_approved BOOLEAN NOT NULL DEFAULT 0
             )"
-        ];
-        foreach ($queries as $query) {
-            self::$dbInstance->exec($query);
-        }
+    ];
+    foreach ($queries as $query) {
+      self::$dbInstance->exec($query);
     }
+  }
 
-    public static function insertMockDataIntoBuckets() {
-        $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM buckets");
-        if ($exists == 0) {
-            $sql = "INSERT INTO buckets (category, description) VALUES
+  public static function insertMockDataIntoBuckets()
+  {
+    $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM buckets");
+    if ($exists == 0) {
+      $sql = "INSERT INTO buckets (category, description) VALUES
                 ('Utilities', 'Monthly utility bills'),
                 ('Groceries', 'Food and household items'),
                 ('Car', 'Car payment and maintenance'),
                 ('Entertainment', 'Movies, games, and other fun stuff'),
                 ('Miscellaneous', 'Other expenses')";
-            self::$dbInstance->exec($sql);
-        }
+      self::$dbInstance->exec($sql);
     }
+  }
 
-    public static function insertMockDataIntoTransactions() {
-        $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM transactions");
-        if ($exists == 0) {
-            $sql = "INSERT INTO transactions (date, amount, description, bucket_id) VALUES
+  public static function insertMockDataIntoTransactions()
+  {
+    $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM transactions");
+    if ($exists == 0) {
+      $sql = "INSERT INTO transactions (date, credit, description, bucket_id) VALUES
                 ('2020-01-01', 100.00, 'Electric bill', 1),
                 ('2020-01-02', 200.00, 'Water bill', 1),
                 ('2020-01-03', 300.00, 'Gas bill', 1),
@@ -74,9 +84,7 @@ class Database {
                 ('2020-01-07', 700.00, 'Movie night', 4),
                 ('2020-01-08', 800.00, 'Game night', 4),
                 ('2020-01-09', 900.00, 'Other', 5)";
-            self::$dbInstance->exec($sql);
-        }
+      self::$dbInstance->exec($sql);
     }
-    
-
+  }
 }
