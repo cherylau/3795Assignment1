@@ -70,21 +70,19 @@ if (!empty($transactions)) {
   echo "</thead>";
   echo "<tbody>";
   foreach ($transactions as $transaction) {
-
-
     echo "<tr>";
     echo "<td>" . htmlspecialchars($transaction['transaction_id'] ?? '') . "</td>";
     echo "<td>" . htmlspecialchars($transaction['date'] ?? '') . "</td>";
-    echo "<td>" . (isset($transaction['credit'] ) && $transaction['credit'] ?? '-' !== NULL ? htmlspecialchars($transaction['credit']) : '-') . "</td>";
-    echo "<td>" . (isset($transaction['debit']) && $transaction['debit'] ?? '-' !== NULL ? htmlspecialchars($transaction['debit']) : '-') . "</td>";
-    echo "<td>" . htmlspecialchars($transaction['description']?? '') . "</td>";
-    echo "<td>" . htmlspecialchars($transaction['category']?? '') . "</td>";
+    echo "<td>" . (is_numeric($transaction['credit']) ? '$' . number_format((float)$transaction['credit'], 2) : '--') . "</td>";
+    echo "<td>" . (is_numeric($transaction['debit']) ? '$' . number_format((float)$transaction['debit'], 2) : '--') . "</td>";
+    echo "<td>" . htmlspecialchars($transaction['description'] ?? '') . "</td>";
+    echo "<td>" . htmlspecialchars($transaction['category'] ?? '') . "</td>";
     echo "<td>";
     echo "<a href='/actions/update/update_transaction.php?id=" . htmlspecialchars($transaction['transaction_id']) . "' class='btn btn-dark '>Edit</a> ";
     echo "<a href='/actions/delete/delete_transaction.php?id=" . htmlspecialchars($transaction['transaction_id']) . "' class='btn btn-danger '>Delete</a>";
     echo "</td>";
     echo "</tr>";
-  }
+}
   echo "</tbody>";
   echo "</table>";
 } else {
