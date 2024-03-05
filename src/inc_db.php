@@ -6,8 +6,9 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/classes/Database.php");
 
 try {
   $db = Database::getConnection();
+  Database::initializeTables();
+  Database::insertKeywordDataFromCSV();
   Database::insertCSVDataIntoBuckets();
-  // Database::insertMockDataIntoTransactions();
 } catch (Exception $e) {
   echo "<p>" . $e->getMessage() . "</p>";
 }

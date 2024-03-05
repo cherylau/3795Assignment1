@@ -1,55 +1,73 @@
 <?php
 class Transaction
 {
-  public static function fetchAll()
-  {
+public static function fetchAll()
+{
     $db = Database::getConnection();
-    $result = $db->query('SELECT * FROM transactions');
+    $result = $db->query('SELECT transactions.*, buckets.category FROM transactions LEFT JOIN buckets ON bucket_id = id');
     $transactions = [];
     while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-      $transactions[] = $row;
+        $transactions[] = $row;
     }
     return $transactions;
-  }
-  public static function importFromCSV($filePath)
-  {
+}
+
+public static function getBucketIdForKeyword($description)
+{
+    $db = Database::getConnection();
+    $stmt = $db->prepare('SELECT bucketId, keyword FROM keywords');
+    $result = $stmt->execute();
+
+    $description = strtoupper($description);
+    echo "\nDescription: " . $description . "\n";
+
+    while ($row = $result->fetchArray()) {
+        echo "Comparing with keyword: " . $row['keyword'] . "\n";
+        if (strpos($description, strtoupper($row['keyword'])) !== false) {
+            echo "Match found. Keyword: " . $row['keyword'] . ", bucketId: " . $row['bucketId'] . "\n";
+            return $row['bucketId'];
+        }
+    }
+
+    echo "No match found. Returning default bucketId: 5\n";
+    return 5;
+}
+  
+ public static function importFromCSV($filePath)
+{
     $db = Database::getConnection();
     $insertedTransactions = [];
 
     if (($handle = fopen($filePath, "r")) !== FALSE) {
-      fgetcsv($handle);
-      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-        $date = $data[0];
-        $description = $data[1];
-        $credit = $data[2];
-        $debit = $data[3];
-        $bucketId = null;
+        fgetcsv($handle);
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $date = $data[0];
+            $description = $data[1];
+            $credit = $data[2];
+            $debit = $data[3];
+            $bucketId = self::getBucketIdForKeyword($description);
 
-        $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id) VALUES (?, ?, ?, ?, ?)');
-        $stmt->bindValue(1, $date, SQLITE3_TEXT);
-        $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
-        $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
-        $stmt->bindValue(4, $description, SQLITE3_TEXT);
-        $stmt->bindValue(5, $bucketId, SQLITE3_INTEGER);
-        $stmt->execute();
+            $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id) VALUES (?, ?, ?, ?, ?)');
+            $stmt->bindValue(1, $date, SQLITE3_TEXT);
+            $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
+            $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
+            $stmt->bindValue(4, $description, SQLITE3_TEXT);
+            $stmt->bindValue(5, $bucketId, SQLITE3_INTEGER);
+            $stmt->execute();
 
-
-        $insertedTransactions[] = [
-          'date' => $date,
-          'description' => $description,
-          'credit' => $credit,
-          'debit' => $debit,
-          'bucketId' => $bucketId
-        ];
-      }
-      fclose($handle);
+            $insertedTransactions[] = [
+                'date' => $date,
+                'description' => $description,
+                'credit' => $credit,
+                'debit' => $debit,
+                'bucketId' => $bucketId
+            ];
+        }
+        fclose($handle);
     }
 
-
     return $insertedTransactions;
-  }
-
-
+}
 
   public static function update($transactionId, $date, $credit, $debit, $description, $bucketId)
   {

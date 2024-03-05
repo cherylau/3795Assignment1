@@ -7,8 +7,8 @@ spl_autoload_register(function ($class_name) {
 try {
   Database::getConnection();
   Database::initializeTables();
+  Database::insertKeywordDataFromCSV();
   Database::insertCSVDataIntoBuckets();
-  Database::insertMockDataIntoTransactions();
   Admin::initalizeAdminUsers();
 } catch (Exception $e) {
   echo "<p>Error setting up the database: " . $e->getMessage() . "</p>";
@@ -52,6 +52,7 @@ echo "<br/><br/><br/>";
 
 echo "<h2>Transaction Records</h2>";
 echo "<a href='/actions/create/create_transaction.php' class='btn btn-success'>Create New Transaction</a><br/><br/>";
+echo "<a href='/actions/chart' class='btn btn-info'>View Chart</a><br/><br/>";
 
 if (!empty($transactions)) {
   echo "<table width='100%' class='table table-striped'>";
@@ -62,7 +63,7 @@ if (!empty($transactions)) {
   echo "<th>Credit</th>";
   echo "<th>Debit</th>";
   echo "<th>Description</th>";
-  // echo "<th>Bucket ID</th>";
+  echo "<th>Category</th>";
   echo "<th>Actions</th>";
   echo "</tr>";
   echo "</thead>";
@@ -76,7 +77,7 @@ if (!empty($transactions)) {
     echo "<td>" . (isset($transaction['credit']) && $transaction['credit'] !== NULL ? htmlspecialchars($transaction['credit']) : '-') . "</td>";
     echo "<td>" . (isset($transaction['debit']) && $transaction['debit'] !== NULL ? htmlspecialchars($transaction['debit']) : '-') . "</td>";
     echo "<td>" . htmlspecialchars($transaction['description']) . "</td>";
-    // echo "<td>" . htmlspecialchars($transaction['bucket_id']) . "</td>";
+    echo "<td>" . htmlspecialchars($transaction['category']) . "</td>";
     echo "<td>";
     echo "<a href='/actions/update/update_transaction.php?id=" . htmlspecialchars($transaction['transaction_id']) . "' class='btn btn-dark '>Edit</a> ";
     echo "<a href='/actions/delete/delete_transaction.php?id=" . htmlspecialchars($transaction['transaction_id']) . "' class='btn btn-danger '>Delete</a>";

@@ -49,7 +49,13 @@ class Database
                 password VARCHAR(255) NOT NULL,
                 role TEXT NOT NULL DEFAULT 'user',
                 is_approved BOOLEAN NOT NULL DEFAULT 0
-            )"
+            )",
+      "CREATE TABLE IF NOT EXISTS keywords (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          keyword VARCHAR(255) UNIQUE NOT NULL,
+          bucketId INTEGER NOT NULL,
+          FOREIGN KEY (bucketId) REFERENCES buckets(id)
+      )"
     ];
     foreach ($queries as $query) {
       self::$dbInstance->exec($query);
@@ -91,6 +97,25 @@ class Database
                 ('2020-01-08', 800.00, 'Game night', 4),
                 ('2020-01-09', 900.00, 'Other', 5)";
       self::$dbInstance->exec($sql);
+    }
+  }
+
+  public static function insertKeywordDataFromCSV()
+  {
+    $exists = self::$dbInstance->querySingle("SELECT COUNT(*) FROM keywords");
+    if ($exists == 0) {
+      if (($handle = fopen("../../import/Keywords.csv", "r")) !== FALSE) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+          if (count($data) == 2) {
+            $sql = "INSERT INTO keywords (keyword, bucketId) VALUES (?, ?)";
+            $stmt = self::$dbInstance->prepare($sql);
+            $stmt->bindValue(1, $data[0]);
+            $stmt->bindValue(2, $data[1]);
+            $stmt->execute();
+          }
+        }
+        fclose($handle);
+      }
     }
   }
 }

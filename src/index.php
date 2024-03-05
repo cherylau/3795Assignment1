@@ -1,5 +1,6 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/inc_db.php");
 ?>
 
 <form action="import/index.php" method="post" enctype="multipart/form-data">
