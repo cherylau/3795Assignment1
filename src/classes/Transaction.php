@@ -15,14 +15,14 @@ public static function fetchAll()
 public static function getBucketIdForKeyword($description)
 {
     $db = Database::getConnection();
-    $stmt = $db->prepare('SELECT bucketId, keyword FROM keywords');
+    $stmt = $db->prepare('SELECT bucket_id, keyword FROM keywords');
     $result = $stmt->execute();
 
     $description = strtoupper($description);
 
     while ($row = $result->fetchArray()) {
         if (strpos($description, strtoupper($row['keyword'])) !== false) {
-            return $row['bucketId'];
+            return $row['bucket_id'];
         }
     }
 
@@ -41,14 +41,14 @@ public static function getBucketIdForKeyword($description)
             $description = $data[1];
             $credit = $data[2];
             $debit = $data[3];
-            $bucketId = self::getBucketIdForKeyword($description);
+            $bucket_id = self::getBucketIdForKeyword($description);
 
             $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id) VALUES (?, ?, ?, ?, ?)');
             $stmt->bindValue(1, $date, SQLITE3_TEXT);
             $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
             $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
             $stmt->bindValue(4, $description, SQLITE3_TEXT);
-            $stmt->bindValue(5, $bucketId, SQLITE3_INTEGER);
+            $stmt->bindValue(5, $bucket_id, SQLITE3_INTEGER);
             $stmt->execute();
 
             $insertedTransactions[] = [
@@ -56,7 +56,7 @@ public static function getBucketIdForKeyword($description)
                 'description' => $description,
                 'credit' => $credit,
                 'debit' => $debit,
-                'bucketId' => $bucketId
+                'bucket_id' => $bucket_id
             ];
         }
         fclose($handle);
@@ -65,7 +65,7 @@ public static function getBucketIdForKeyword($description)
     return $insertedTransactions;
 }
 
-  public static function update($transactionId, $date, $credit, $debit, $description, $bucketId)
+  public static function update($transactionId, $date, $credit, $debit, $description, $bucket_id)
   {
     $db = Database::getConnection();
     $stmt = $db->prepare('UPDATE transactions SET date = ?, amount = ?, description = ?, bucket_id = ? WHERE transaction_id = ?');
@@ -73,7 +73,7 @@ public static function getBucketIdForKeyword($description)
     $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
     $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
     $stmt->bindValue(3, $description, SQLITE3_TEXT);
-    $stmt->bindValue(4, $bucketId, SQLITE3_INTEGER);
+    $stmt->bindValue(4, $bucket_id, SQLITE3_INTEGER);
     $stmt->bindValue(5, $transactionId, SQLITE3_INTEGER);
     return $stmt->execute() ? true : false;
   }
@@ -95,7 +95,7 @@ public static function getBucketIdForKeyword($description)
     return $stmt->execute() ? true : false;
   }
 
-  public static function create($date, $credit, $debit, $description, $bucketId)
+  public static function create($date, $credit, $debit, $description, $bucket_id)
   {
     $db = Database::getConnection();
     $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id) VALUES (?, ?, ?, ?, ?)');
@@ -103,7 +103,7 @@ public static function getBucketIdForKeyword($description)
     $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
     $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
     $stmt->bindValue(4, $description, SQLITE3_TEXT);
-    $stmt->bindValue(5, $bucketId, SQLITE3_INTEGER);
+    $stmt->bindValue(5, $bucket_id, SQLITE3_INTEGER);
     return $stmt->execute() ? true : false;
   }
 }

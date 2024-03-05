@@ -9,6 +9,7 @@ try {
   Database::initializeTables();
   Database::insertKeywordDataFromCSV();
   Database::insertCSVDataIntoBuckets();
+  Admin::initalizeAdminUsers();
 } catch (Exception $e) {
   echo "<p>" . $e->getMessage() . "</p>";
 }

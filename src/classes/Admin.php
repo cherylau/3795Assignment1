@@ -11,6 +11,7 @@ class Admin extends User
     return [
       ['email' => 'mika@bcit.com', 'password' => password_hash('mika', PASSWORD_DEFAULT), 'role' => 'admin', 'is_approved' => 1],
       ['email' => 'cheryl@bcit.com', 'password' => password_hash('cheryl', PASSWORD_DEFAULT), 'role' => 'admin', 'is_approved' => 1],
+      ['email' => 'cheryl@user.com', 'password' => password_hash('cheryl', PASSWORD_DEFAULT), 'role' => 'user', 'is_approved' => 1],
     ];
   }
 

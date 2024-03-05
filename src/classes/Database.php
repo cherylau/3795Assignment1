@@ -53,8 +53,8 @@ class Database
       "CREATE TABLE IF NOT EXISTS keywords (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           keyword VARCHAR(255) UNIQUE NOT NULL,
-          bucketId INTEGER NOT NULL,
-          FOREIGN KEY (bucketId) REFERENCES buckets(id)
+          bucket_id INTEGER NOT NULL,
+          FOREIGN KEY (bucket_id) REFERENCES buckets(id)
       )"
     ];
     foreach ($queries as $query) {
@@ -109,7 +109,7 @@ class Database
 
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
           if (count($data) == 2) {
-            $sql = "INSERT INTO keywords (keyword, bucketId) VALUES (?, ?)";
+            $sql = "INSERT INTO keywords (keyword, bucket_id) VALUES (?, ?)";
             $stmt = self::$dbInstance->prepare($sql);
             $stmt->bindValue(1, $data[0]);
             $stmt->bindValue(2, $data[1]);
