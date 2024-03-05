@@ -8,16 +8,15 @@ require_once("../../utils.php");
 
 if (isset($_POST['submit'])) {
   $date = sanitize_input($_POST['Date']);
-  $amount = sanitize_input($_POST['Amount']);
+  $credit = sanitize_input($_POST['Credit']);
+  $debit = sanitize_input($_POST['Debit']);
   $description = sanitize_input($_POST['Description']);
-  $transactionType = sanitize_input($_POST['TransactionType']);
   // $bucketId = sanitize_input($_POST['BucketId']);
   //TODO: get the bucketId 
   $bucketId = 1;
 
 
-  $credit = $transactionType === 'Credit' ? $amount : NULL;
-  $debit = $transactionType === 'Debit' ? $amount : NULL;
+
 
   if (Transaction::create($date, $credit, $debit, $description, $bucketId)) {
     header("Location: ../../actions/display/display.php?message=Transaction+Created+Successfully");

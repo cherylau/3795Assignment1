@@ -10,17 +10,12 @@ include("../../inc_header.php");
   </div>
 
   <div class="form-group">
-    <label for="TransactionType" class="control-label">Transaction Type</label>
-    <select class="form-control" name="TransactionType" id="TransactionType" required>
-      <option value="">Select...</option>
-      <option value="Credit">Credit</option>
-      <option value="Debit">Debit</option>
-    </select>
+    <label for="Debit" class="control-label">Debit Amount</label>
+    <input type="number" step="0.01" class="form-control" name="Debit" id="Debit" value="<?php echo $transaction['debit']; ?>">
   </div>
-
   <div class="form-group">
-    <label for="Amount" class="control-label">Amount</label>
-    <input type="number" step="0.01" class="form-control" name="Amount" id="Amount" required>
+    <label for="Credit" class="control-label">Credit Amount</label>
+    <input type="number" step="0.01" class="form-control" name="Credit" id="Credit" value="<?php echo $transaction['credit']; ?>">
   </div>
 
   <div class="form-group">

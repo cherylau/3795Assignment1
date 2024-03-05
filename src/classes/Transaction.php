@@ -84,7 +84,7 @@ class Transaction
   public static function create($date, $credit, $debit, $description, $bucketId)
   {
     $db = Database::getConnection();
-    $stmt = $db->prepare('INSERT INTO transactions (date, amount, description, bucket_id) VALUES (?, ?, ?, ?)');
+    $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id) VALUES (?, ?, ?, ?, ?)');
     $stmt->bindValue(1, $date, SQLITE3_TEXT);
     $stmt->bindValue(2, $credit, SQLITE3_FLOAT);
     $stmt->bindValue(3, $debit, SQLITE3_FLOAT);
