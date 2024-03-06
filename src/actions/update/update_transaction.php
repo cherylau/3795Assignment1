@@ -16,23 +16,23 @@ if (isset($_GET['id'])) {
       <input type="hidden" name="transactionId" value="<?php echo htmlspecialchars($transaction['transaction_id']); ?>">
       <div class="form-group">
         <label for="Date" class="control-label">Date</label>
-        <input type="text" class="form-control" name="Date" id="Date" value="<?php echo $transaction['date']; ?>">
+        <input type="text" class="form-control" name="Date" id="date" value="<?php echo $transaction['date']; ?>">
       </div>
       <div class="form-group">
         <label for="Debit" class="control-label">Debit Amount</label>
-        <input type="number" step="0.01" class="form-control" name="Debit" id="Debit" value="<?php echo $transaction['debit']; ?>">
+        <input type="number" step="0.01" class="form-control" name="Debit" id="debit" value="<?php echo $transaction['debit']; ?>">
       </div>
       <div class="form-group">
         <label for="Credit" class="control-label">Credit Amount</label>
-        <input type="number" step="0.01" class="form-control" name="Credit" id="Credit" value="<?php echo $transaction['credit']; ?>">
+        <input type="number" step="0.01" class="form-control" name="Credit" id="credit" value="<?php echo $transaction['credit']; ?>">
       </div>
       <div class="form-group">
         <label for="Description" class="control-label">Description</label>
-        <input type="text" class="form-control" name="Description" id="Description" value="<?php echo $transaction['description']; ?>">
+        <input type="text" class="form-control" name="Description" id="description" value="<?php echo $transaction['description']; ?>">
       </div>
       <div class="form-group">
         <label for="BucketId" class="control-label">Bucket ID</label>
-        <input type="number" class="form-control" name="BucketId" id="BucketId" value="<?php echo $transaction['bucket_id']; ?>">
+        <input type="number" class="form-control" name="BucketId" id="bucket_id" value="<?php echo $transaction['bucket_id']; ?>">
       </div>
       <div class="form-group">
         <a href="../../actions/display/display.php" class="btn btn-small btn-primary">&lt;&lt; BACK</a>

@@ -26,11 +26,11 @@ if ($user && password_verify($password, $user['password'])) {
         }
     } else {
         $_SESSION['error'] = "Your account is pending approval.";
-        header('Location: /src/errors/error.php?type=pending_approval');
+        header('Location: ../../errors/error.php?type=pending_approval');
         exit;
     }
 } else {
     $_SESSION['error'] = "Invalid email or password.";
-    header("Location: /");
+    header("Location: ../../errors/error.php?type=invalid_credentials");
 }
 exit();

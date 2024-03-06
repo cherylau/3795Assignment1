@@ -1,17 +1,18 @@
 <?php
-require_once("../../src/classes/Database.php");
+require_once("../../classes/Database.php");
 require_once("../../utils.php");
-require_once("../../src/classes/Transaction.php");
+require_once("../../classes/Transaction.php");
 
 Database::getConnection();
 
 if (isset($_POST['submit'])) {
-  $transactionId = sanitize_input($_POST['transactionId']);
-  $date = sanitize_input($_POST['Date']);
-  $amount = sanitize_input($_POST['Amount']);
-  $description = sanitize_input($_POST['Description']);
-  $bucketId = sanitize_input($_POST['BucketId']);
-  $success = Transaction::update($transactionId, $date, $credit, $debit, $description, $bucketId);
+  $transactionId = sanitize_input($_POST['transaction_id']);
+  $date = sanitize_input($_POST['date']);
+  $credit = sanitize_input($_POST['credit']);
+  $debit = sanitize_input($_POST['debit']);
+  $description = sanitize_input($_POST['description']);
+  $bucketId = sanitize_input($_POST['bucket_id']);
+  $success = Transaction::update($transactionId, $date, $credit, $debit, $description, $bucket_id);
 
   if ($success) {
     header('Location: ../../actions/display/display.php?message=Transaction updated successfully');
@@ -20,3 +21,4 @@ if (isset($_POST['submit'])) {
   }
   exit;
 }
+?>
