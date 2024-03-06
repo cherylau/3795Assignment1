@@ -103,9 +103,10 @@ class Transaction
     return $stmt->execute() ? true : false;
   }
 
-  public static function create($date, $credit, $debit, $description, $bucket_id)
+  public static function create($date, $credit, $debit, $description)
   {
     $db = Database::getConnection();
+    $bucket_id = self::getBucketIdforKeyword($description);
     $user_id = $_SESSION['user_id'];
     $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id, user_id) VALUES (?, ?, ?, ?, ?, ?)');
     $stmt->bindValue(1, $date, SQLITE3_TEXT);
