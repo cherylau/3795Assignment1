@@ -23,7 +23,7 @@ include("../../inc_header.php");
 
     <div class="form-group">
         <input type="submit" value="Create" name="submit" class="btn btn-success">
-        <a href="../../actions/display/display.php" class="btn btn-primary">&lt;&lt; BACK</a>
+        <a href="../../actions/admin/manage_categories.php" class="btn btn-primary">&lt;&lt; BACK</a>
     </div>
 </form>
 

@@ -20,9 +20,4 @@
 <div class="container">
   <br>
   <br>
-<?php if(isset($_SESSION['user_email'])): ?>
-    <div class="user-info">
-        Logged in as: <strong><?php echo htmlspecialchars($_SESSION['user_email']); ?></strong>
-    </div>
-<?php endif; ?>
 

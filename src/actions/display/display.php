@@ -19,10 +19,6 @@ $transactions = Transaction::fetchAll();
 $otherTransactions = Transaction::fetchUncategorized();
 
 echo "<br/><br/><br/>";
-
-
-
-
 include("../../tables/transactions.php");
 
 if ($otherTransactions) {

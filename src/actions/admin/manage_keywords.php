@@ -15,10 +15,16 @@ spl_autoload_register(function ($class_name) {
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_db.php");
 $keywords = Keyword::fetchAll();
-
+$dashboardUrl = "../../dashboard/admin_dashboard.php";
+$addKeywordUrl = "/actions/create/create_keyword.php";
 echo "<h2>Keyword Records</h2>";
-echo "<a href='/actions/create/create_keyword.php' class='btn btn-success'>Add New Keyword</a><br/><br/>";
-
+echo "<div class='d-flex justify-content-start'>";
+echo "<a href='" . htmlspecialchars($dashboardUrl) . "' class='btn btn-primary'>Back To Dashboard</a>";
+echo "<div class='mx-2'>";
+echo "<a href='" . htmlspecialchars($addKeywordUrl) . "' class='btn btn-success'>Add New Keyword</a>";
+echo "</div>";
+echo "</div>";
+echo "<br/>";
 if (!empty($keywords)) {
   echo "<table width='100%' class='table table-striped'>";
   echo "<thead>";
@@ -47,4 +53,5 @@ if (!empty($keywords)) {
   echo "<p>No keyword records found.</p>";
 }
 ?>
+
 <?php include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php"); ?>
