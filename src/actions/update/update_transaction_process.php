@@ -3,7 +3,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
 if (!isset($_SESSION['user_id'])) {
-  header('location: index.php');
+  header('location: /');
   exit;
 }
 spl_autoload_register(function ($class_name) {

@@ -9,7 +9,7 @@
                 echo '<a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '" class="btn btn-light me-3">Back</a>';
             }
             ?>
-            <a href="../actions/login/logout.php" class="btn btn-dark">Logout</a>
+            <a href="/actions/login/logout.php" class="btn btn-dark">Logout</a>
         </div>
     </div>
 </footer>
