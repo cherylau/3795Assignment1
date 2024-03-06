@@ -1,16 +1,19 @@
 <?php
-require_once("../../src/classes/Database.php");
+spl_autoload_register(function ($class_name) {
+  include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+});
 require_once("../../utils.php");
-require_once("../../src/classes/Transaction.php");
+
 
 Database::getConnection();
 
 if (isset($_POST['submit'])) {
   $transactionId = sanitize_input($_POST['transactionId']);
   $date = sanitize_input($_POST['Date']);
-  $amount = sanitize_input($_POST['Amount']);
+  $debit = sanitize_input($_POST['Debit']);
+  $credit = sanitize_input($_POST['Credit']);
   $description = sanitize_input($_POST['Description']);
-  $bucketId = sanitize_input($_POST['BucketId']);
+  $bucketId = Transaction::getBucketIdForKeyword($description);
   $success = Transaction::update($transactionId, $date, $credit, $debit, $description, $bucketId);
 
   if ($success) {

@@ -31,10 +31,6 @@ if (isset($_GET['id'])) {
         <input type="text" class="form-control" name="Description" id="Description" value="<?php echo $transaction['description']; ?>">
       </div>
       <div class="form-group">
-        <label for="BucketId" class="control-label">Bucket ID</label>
-        <input type="number" class="form-control" name="BucketId" id="BucketId" value="<?php echo $transaction['bucket_id']; ?>">
-      </div>
-      <div class="form-group">
         <a href="../../actions/display/display.php" class="btn btn-small btn-primary">&lt;&lt; BACK</a>
         <input type="submit" value="Update" name="submit" class="btn btn-warning">
       </div>
