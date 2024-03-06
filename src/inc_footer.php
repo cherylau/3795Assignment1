@@ -3,15 +3,16 @@
 </div>
 <footer class="footer mt-auto py-3 bg-light fixed-bottom">
     <div class="container">
+        <?php if (isset($_SESSION['user_email'])) : ?>
+            <p>Logged in as: <strong><?php echo htmlspecialchars($_SESSION['user_email']); ?></strong></p>
+        <?php endif; ?>
         <div class="d-flex justify-content-end">
-            <?php
-            if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
-                echo '<a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '" class="btn btn-light me-3">Back</a>';
-            }
-            ?>
-            <a href="../actions/login/logout.php" class="btn btn-dark">Logout</a>
+            <a href="/actions/login/logout.php" class="btn btn-dark">Logout</a>
         </div>
     </div>
+</footer>
+
+</div>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -19,4 +20,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

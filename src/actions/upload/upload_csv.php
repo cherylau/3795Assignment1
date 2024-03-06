@@ -10,7 +10,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
 if (!isset($_SESSION['user_id'])) {
-  header('location: index.php');
+  header('location: /');
   exit;
 }
 include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");

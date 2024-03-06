@@ -55,4 +55,7 @@ $pendingUsers = User::fetchAllPendingApproval();
     <div class="alert alert-info">There are no more pending users for approval.</div>
 <?php endif; ?>
 
+<a href="../../dashboard/admin_dashboard.php" class="btn btn-primary">Back To Dashboard</a>
+
+
 <?php include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php"); ?>

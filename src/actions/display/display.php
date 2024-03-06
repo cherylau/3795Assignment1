@@ -3,7 +3,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   session_start();
 }
 if (!isset($_SESSION['user_id'])) {
-  header('location: index.php');
+  header('location: /');
   exit;
 }
 
@@ -19,10 +19,6 @@ $transactions = Transaction::fetchAll();
 $otherTransactions = Transaction::fetchUncategorized();
 
 echo "<br/><br/><br/>";
-
-
-
-
 include("../../tables/transactions.php");
 
 if ($otherTransactions) {

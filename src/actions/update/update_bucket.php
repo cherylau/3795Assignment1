@@ -3,9 +3,9 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-if (!isset($_SESSION['user_id'])) {
-    header('location: index.php');
-    exit;
+if (empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'user') {
+  header('Location: /errors/error.php?type=user_only');
+  exit;
 }
 
 include("../../inc_header.php");

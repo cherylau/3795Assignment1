@@ -2,8 +2,8 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-if (!isset($_SESSION['user_id'])) {
-    header('location: index.php');
+if (empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'user') {
+    header('Location: /errors/error.php?type=user_only');
     exit;
 }
 include("../../inc_header.php");
@@ -23,7 +23,7 @@ include("../../inc_header.php");
 
     <div class="form-group">
         <input type="submit" value="Create" name="submit" class="btn btn-success">
-        <a href="../../actions/display/display.php" class="btn btn-primary">&lt;&lt; BACK</a>
+        <a href="../../actions/admin/manage_categories.php" class="btn btn-primary">&lt;&lt; BACK</a>
     </div>
 </form>
 
