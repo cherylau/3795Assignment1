@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once 'Admin.php';
 
 class Database
@@ -41,7 +41,9 @@ class Database
                 debit REAL,
                 description TEXT,
                 bucket_id INTEGER,
-                FOREIGN KEY (bucket_id) REFERENCES buckets(id)
+                user_id INTEGER,
+                FOREIGN KEY (bucket_id) REFERENCES buckets(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
             )",
       "CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,

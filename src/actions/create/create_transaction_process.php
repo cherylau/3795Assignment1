@@ -11,9 +11,9 @@ if (isset($_POST['submit'])) {
   $credit = sanitize_input($_POST['Credit']);
   $debit = sanitize_input($_POST['Debit']);
   $description = sanitize_input($_POST['Description']);
-  // $bucketId = sanitize_input($_POST['BucketId']);
-  //TODO: get the bucketId 
-  $bucketId = 1;
+  $bucketId = Transaction::getBucketIdForKeyword($description);
+  $user_id = $_SESSION['user_id'];
+  $bucketId = Transaction::getBucketIdForKeyword($user_id);
 
 
 
