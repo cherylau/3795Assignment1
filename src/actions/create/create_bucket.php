@@ -1,4 +1,11 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+if (!isset($_SESSION['user_id'])) {
+    header('location: index.php');
+    exit;
+}
 include("../../inc_header.php");
 ?>
 

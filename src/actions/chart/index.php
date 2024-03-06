@@ -1,3 +1,13 @@
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+if (!isset($_SESSION['user_id'])) {
+    header('location: index.php');
+    exit;
+}
+?>
+
 <?php include($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");?>
 <?php include($_SERVER['DOCUMENT_ROOT'] . "/inc_db.php"); ?>
 

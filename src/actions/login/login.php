@@ -1,4 +1,13 @@
-<?php include ('../../inc_header.php'); ?>
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+if (!isset($_SESSION['user_id'])) {
+    header('location: index.php');
+    exit;
+}
+
+include ('../../inc_header.php'); ?>
 
 <div class="container">
     <h2>Login</h2>

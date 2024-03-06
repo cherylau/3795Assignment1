@@ -1,19 +1,18 @@
 <?php
-
-spl_autoload_register(function ($class_name) {
-    include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
-  });
-require_once '../../inc_header.php';
-
-if (session_status() == PHP_SESSION_NONE) {
+if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+if (empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     header('Location: /errors/error.php?type=admin_only');
     exit;
 }
-$message = ''; 
+
+require_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
+spl_autoload_register(function ($class_name) {
+    require $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+});
+
+$message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['approve_user_id'])) {
     $userIdToApprove = $_POST['approve_user_id'];
     if (Admin::approveUser($userIdToApprove)) {
@@ -30,28 +29,30 @@ $pendingUsers = User::fetchAllPendingApproval();
 
 <?php echo $message; ?>
 
-<?php if (!empty($pendingUsers)): ?>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($pendingUsers as $user): ?>
-        <tr>
-            <td><?= htmlspecialchars($user['email']); ?></td>
-            <td>
-                <form action="admin_process.php" method="post">
-                    <input type="hidden" name="approve_user_id" value="<?= $user['id']; ?>">
-                    <button type="submit" class="btn btn-success">Approve</button>
-                </form>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-<?php else: ?>
+<?php if (!empty($pendingUsers)) : ?>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($pendingUsers as $user) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($user['email']); ?></td>
+                    <td>
+                        <form action="admin_process.php" method="post">
+                            <input type="hidden" name="approve_user_id" value="<?= $user['id']; ?>">
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else : ?>
     <div class="alert alert-info">There are no more pending users for approval.</div>
 <?php endif; ?>
+
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php"); ?>

@@ -4,7 +4,16 @@
   <input type="submit" value="Upload File" name="submit">
 </form> -->
 
-<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
+
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
+if (!isset($_SESSION['user_id'])) {
+  header('location: index.php');
+  exit;
+}
+include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
 ?>
 <div class="container mt-4"></div>
   <form action="index.php" method="post" enctype="multipart/form-data">

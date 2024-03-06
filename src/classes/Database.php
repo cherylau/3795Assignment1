@@ -1,7 +1,8 @@
 <?php
-session_start();
 require_once 'Admin.php';
-
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 class Database
 {
   private static $dbPath = '/db.sqlite';

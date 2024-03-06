@@ -1,7 +1,16 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+if (!isset($_SESSION['user_id'])) {
+    header('location: index.php');
+    exit;
+}
+
 require_once("../../src/classes/Database.php");
 require_once("../../utils.php");
 require_once("../../src/classes/Transaction.php");
+
 
 if (isset($_POST['submit'])) {
     $date = sanitize_input($_POST['Date']);

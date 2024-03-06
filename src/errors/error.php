@@ -1,4 +1,12 @@
 <?php
+
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+if (empty($_SESSION['user_id'])) {
+    header('Location: /');
+    exit;
+}
 include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
 ?>
 

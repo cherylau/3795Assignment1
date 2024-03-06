@@ -1,19 +1,15 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+<?php 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+if (empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
     header('Location: /errors/error.php?type=admin_only');
     exit;
 }
 
-include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
 spl_autoload_register(function ($class_name) {
-    include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
-});
-
-include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
-spl_autoload_register(function ($class_name) {
-    include $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
 });
 
 $buckets = Bucket::fetchAll();
@@ -48,3 +44,5 @@ if (!empty($buckets)) {
 } else {
     echo "<p>No bucket records found.</p>";
 }
+?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_footer.php"); ?>
