@@ -31,6 +31,9 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
                     case 'pending_approval':
                         $errorMessage = "Your account is pending approval by an administrator.";
                         break;
+                    case 'user_only':
+                        $errorMessage = "This area is reserved for users only.";
+                        break;
                     case 'not_found':
                     default:
                         $errorMessage = "We can't seem to find the page you're looking for.";
