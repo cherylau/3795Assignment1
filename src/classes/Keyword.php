@@ -13,12 +13,12 @@ class Keyword
     return $keywords;
   }
 
-  public static function update($keywordId, $keyword, $description)
+  public static function update($keywordId, $keyword, $bucketId)
   {
     $db = Database::getConnection();
-    $stmt = $db->prepare('UPDATE keywords SET keyword = ?, description = ? WHERE id = ?');
+    $stmt = $db->prepare('UPDATE keywords SET keyword = ?, bucket_id = ? WHERE id = ?');
     $stmt->bindValue(1, $keyword, SQLITE3_TEXT);
-    $stmt->bindValue(2, $description, SQLITE3_TEXT);
+    $stmt->bindValue(2, $bucketId, SQLITE3_TEXT);
     $stmt->bindValue(3, $keywordId, SQLITE3_INTEGER);
     return $stmt->execute() ? true : false;
   }
@@ -40,12 +40,12 @@ class Keyword
     return $stmt->execute() ? true : false;
   }
 
-  public static function create($keyword, $description)
+  public static function create($keyword, $bucketId)
   {
     $db = Database::getConnection();
-    $stmt = $db->prepare('INSERT INTO keywords (keyword, description) VALUES (?, ?)');
+    $stmt = $db->prepare('INSERT INTO keywords (keyword, bucket_id) VALUES (?, ?)');
     $stmt->bindValue(1, $keyword, SQLITE3_TEXT);
-    $stmt->bindValue(2, $description, SQLITE3_TEXT);
+    $stmt->bindValue(2, $bucketId, SQLITE3_TEXT);
     return $stmt->execute() ? true : false;
   }
 }
