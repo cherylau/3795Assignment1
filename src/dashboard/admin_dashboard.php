@@ -15,7 +15,15 @@ if (!isset($_SESSION['user_role'])) {
 ?>
 
 <h2>Admin Dashboard</h2>
-<p>Hello, <?= htmlspecialchars($_SESSION['user_email']) ?>! Here's what you can do:</p>
+<p>Hello,
+  <?php
+  $email = $_SESSION['user_email'];
+  if ($email === 'aa@aa.aa') {
+    echo 'Admin';
+  } else {
+    echo htmlspecialchars($email);
+  }
+  ?>! Here's what you can do:</p>
 
 <ul>
   <li><a href="../actions/admin/admin_process.php">Approve Users</a></li>

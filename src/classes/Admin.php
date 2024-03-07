@@ -13,6 +13,7 @@ class Admin extends User
       ['email' => 'cheryl@bcit.com', 'password' => password_hash('cheryl', PASSWORD_DEFAULT), 'role' => 'admin', 'is_approved' => 1],
       ['email' => 'cheryl@user.com', 'password' => password_hash('cheryl', PASSWORD_DEFAULT), 'role' => 'user', 'is_approved' => 1],
       ['email' => 'mika@user.com', 'password' => password_hash('mika', PASSWORD_DEFAULT), 'role' => 'user', 'is_approved' => 1],
+      ['email' => 'aa@aa.aa', 'password' => password_hash('P@$$w0rd', PASSWORD_DEFAULT), 'role' => 'admin', 'is_approved' => 1],
 
     ];
   }
