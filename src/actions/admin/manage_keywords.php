@@ -1,16 +1,23 @@
-<?php 
+<?php
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+  session_start();
 }
 if (empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-    header('Location: /errors/error.php?type=admin_only');
-    exit;
+  header('Location: /errors/error.php?type=admin_only');
+  exit;
 }
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/inc_header.php");
 spl_autoload_register(function ($class_name) {
-    require $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
+  require $_SERVER['DOCUMENT_ROOT'] . '/classes/' . $class_name . '.php';
 });
+
+if (isset($_GET['message'])) {
+  echo "<p class='success'>{$_GET['message']}</p>";
+}
+if (isset($_GET['error'])) {
+  echo "<p class='error'>{$_GET['error']}</p>";
+}
 
 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/inc_db.php");

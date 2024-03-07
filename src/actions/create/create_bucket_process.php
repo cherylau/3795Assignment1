@@ -20,9 +20,9 @@ if (isset($_POST['submit'])) {
   $description = sanitize_input($_POST['Description']);
 
   if (Bucket::create($category, $description)) {
-    header("Location: ../../actions/admin/manage_categories.php?message=Bucket+Created+Successfully");
+    header("Location: ../../actions/admin/manage_buckets.php?message=Bucket+Created+Successfully");
   } else {
-    header("Location: actions/admin/manage_categories.php?error=Unable+to+create+bucket");
+    header("Location: actions/admin/manage_buckets.php?error=Unable+to+create+bucket");
   }
 } else {
   header("Location: create_bucket.php?error=Form+submission+failed");

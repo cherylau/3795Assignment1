@@ -27,7 +27,7 @@ if (!isset($_SESSION['user_role'])) {
 
 <ul>
   <li><a href="../actions/admin/admin_process.php">Approve Users</a></li>
-  <li><a href="../actions/admin/manage_categories.php">Manage Users and Transaction Categories</a></li>
+  <li><a href="../actions/admin/manage_buckets.php">Manage Users and Transaction Categories</a></li>
   <li><a href="../actions/admin/manage_keywords.php">Manage Keywords for CSV Upload</a></li>
 </ul>
 

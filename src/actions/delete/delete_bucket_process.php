@@ -16,9 +16,9 @@ Database::getConnection();
 if (isset($_POST['bucketId'])) {
   $bucketId = $_POST['bucketId'];
   if (Bucket::delete($bucketId)) {
-    header('Location: ../../dashboard/admin_dashboard.php?message=Transaction updated successfully');
+    header('Location: ../../actions/admin/manage_buckets.php?message=Bucket deleted successfully');
   } else {
-    header("Location: ../../dashboard/admin_dashboard.php?error=Unable+to+delete+bucket");
+    header("Location: ../../actions/admin/manage_buckets.php?error=Unable+to+delete+bucket");
   }
 } else {
   header("Location: ../../dashboard/admin_dashboard.php?error=No+Bucket+ID+provided");

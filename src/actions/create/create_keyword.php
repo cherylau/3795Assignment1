@@ -2,8 +2,8 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-if (empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'user') {
-    header('Location: /errors/error.php?type=user_only');
+if (empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+    header('Location: /errors/error.php?type=admin_only');
     exit;
 }
 include("../../inc_header.php");
