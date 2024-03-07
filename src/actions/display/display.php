@@ -29,7 +29,9 @@ if ($otherTransactions) {
 
 echo "<h2>Transaction Records</h2>";
 echo "<a href='/actions/create/create_transaction.php' class='btn btn-success'>Create New Transaction</a><br/><br/>";
-echo "<a href='/actions/chart' class='btn btn-info'>View Chart</a><br/><br/>";
+echo '<div class="d-flex">';
+echo '<a href="/actions/summary" class="btn btn-info" style="margin-right: 10px;">Summary</a>';
+echo '</div>';
 displayTransactions($transactions);
 
 include_once("../../inc_footer.php");

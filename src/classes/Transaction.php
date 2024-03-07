@@ -60,12 +60,11 @@ class Transaction
     if (($handle = fopen($filePath, "r")) !== FALSE) {
       fgetcsv($handle);
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-        $date = $data[0];
+        $date = DateTime::createFromFormat('m/d/Y', $data[0])->format('Y-m-d');
         $description = $data[1];
         $credit = $data[2];
         $debit = $data[3];
         $bucket_id = self::getBucketIdForKeyword($description);
-        $user_id = $_SESSION['user_id'];
 
         $stmt = $db->prepare('INSERT INTO transactions (date, credit, debit, description, bucket_id, user_id) VALUES (?, ?, ?, ?, ?, ?)');
         $stmt->bindValue(1, $date, SQLITE3_TEXT);
