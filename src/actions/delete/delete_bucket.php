@@ -22,11 +22,11 @@ if (isset($_GET['id'])) {
   echo "<form action='delete_bucket_process.php' method='post'>
             <input type='hidden' name='bucketId' value='{$bucketId}'>
             <input type='submit' value='Confirm' class='btn btn-danger'>
-            <a href='../../actions/display/display.php' class='btn btn-primary'>Cancel</a>
+            <a href='../../dashboard/admin_dashboard.php' class='btn btn-primary'>Cancel</a>
         </form>";
 } else {
   echo "<p>No bucket ID provided.</p>";
-  echo "<a href='../../actions/display/display.php' class='btn btn-primary'>Go Back</a>";
+  echo "<a href='../../dashboard/admin_dashboard.php' class='btn btn-primary'>Go Back</a>";
 }
 
 include("../../inc_footer.php");
